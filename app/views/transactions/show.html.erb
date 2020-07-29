@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @transaction.email %>
+</p>
+
+<p>
+  <strong>Flight number:</strong>
+  <%= @transaction.flight_number %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @transaction.price %>
+</p>
+
+<p>
+  <strong>Payment token:</strong>
+  <%= @transaction.payment_token %>
+</p>
+
+<p>
+  <strong>Retain card:</strong>
+  <%= @transaction.retain_card %>
+</p>
+
+<p>
+  <strong>Expedia purchase:</strong>
+  <%= @transaction.expedia_purchase %>
+</p>
+
+<%= link_to 'Edit', edit_transaction_path(@transaction) %> |
+<%= link_to 'Back', transactions_path %>

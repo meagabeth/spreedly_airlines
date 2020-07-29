@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  flight_number: 1
+  price: 1
+  payment_token: MyString
+  retain_card: false
+  expedia_purchase: false
+
+two:
+  email: MyString
+  flight_number: 1
+  price: 1
+  payment_token: MyString
+  retain_card: false
+  expedia_purchase: false
