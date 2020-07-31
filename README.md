@@ -1,11 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This README is for the Spreedly Airlines application built during week 2 of onboarding. To run the program locally:
 
-Things you may want to cover:
+Clone the repo:
 
-* Ruby version
+`git clone https://github.com/meagabeth/spreedly_airlines.git`
+
+Install gems:
+
+`bundle install`
+
+
 
 * System dependencies
 
