@@ -25,5 +25,5 @@
   <%= @flight.price %>
 </p>
 
-<%= link_to 'Buy Ticket', {:controller=> "transactions", :action=> "new", :flight_number=> @flight.flight_number} %> |
+<%= link_to 'Buy Ticket', {:controller=> "transactions", :action=> "new", :flight_number=> @flight.id} %> |
 <%= link_to 'Back', flights_path %>
