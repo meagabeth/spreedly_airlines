@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_205813) do
+ActiveRecord::Schema.define(version: 2020_08_05_215836) do
 
   create_table "flights", force: :cascade do |t|
     t.integer "flight_number"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2020_07_29_205813) do
     t.boolean "expedia_purchase"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "flight_id"
   end
 
 end

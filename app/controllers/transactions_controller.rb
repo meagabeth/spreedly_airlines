@@ -28,6 +28,7 @@ class TransactionsController < ApplicationController
   # POST /transactions.json
   def create
     @flight = Flight.find(transaction_params[:flight_id])
+    flight_id = transaction_params[:flight_id]
     @transaction = Transaction.new(transaction_params)
     price = transaction_params[:price]
     payment_token = transaction_params[:payment_token]
@@ -75,6 +76,6 @@ class TransactionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def transaction_params
-      params.require(:transaction).permit(:email, :flight_number, :price, :payment_token, :retain_card, :expedia_purchase)
+      params.require(:transaction).permit(:email, :flight_number, :price, :payment_token, :retain_card, :expedia_purchase, :flight_id)
     end
 end

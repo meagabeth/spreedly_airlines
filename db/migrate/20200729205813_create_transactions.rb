@@ -7,6 +7,7 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
       t.string :payment_token
       t.boolean :retain_card
       t.boolean :expedia_purchase
+      t.integer :flight_id
 
       t.timestamps
     end
