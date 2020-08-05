@@ -18,7 +18,6 @@ class TransactionsController < ApplicationController
     @id = @flight.id
     @transaction = Transaction.new
 
-    # env = Spreedly::Environment.new(DEV['ENVIRONMENT_KEY'], DEV['ACCESS_SECRET'])
   end
 
   # GET /transactions/1/edit
@@ -28,7 +27,7 @@ class TransactionsController < ApplicationController
   # POST /transactions
   # POST /transactions.json
   def create
-    @flight = Flight.find(transaction_params[:flight_number])
+    @flight = Flight.find(transaction_params[:flight_id])
     @transaction = Transaction.new(transaction_params)
     price = transaction_params[:price]
     payment_token = transaction_params[:payment_token]

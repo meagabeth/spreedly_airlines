@@ -13,17 +13,17 @@
 
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.text_field :email, :placeholder => 'you@email.com'%>
   </div>
 
   <div class="field">
     <%= form.label :flight_number %>
-    <%= form.number_field :flight_number %>
+    <%= form.number_field :flight_number, :value => @flight.flight_number %>
   </div>
 
   <div class="field">
     <%= form.label :price %>
-    <%= form.number_field :price %>
+    <%= form.number_field :price, :value => (@flight.price)/100 %>
   </div>
 
   <div class="field">
@@ -41,7 +41,40 @@
     <%= form.check_box :expedia_purchase %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form.hidden_field :payment_token %>
+
 <% end %>
+
+<button type="button" onmouseover="spreedlyInit()" onClick="SpreedlyExpress.openView()">Continue to Payment</button>
+
+<script>
+function spreedlyInit() {
+    SpreedlyExpress.init("8gUXkyDz1dfmdmg5R1Dhaqu6630", {
+      "amount": "$" + document.getElementById('transaction_price').value,
+      "company_name": "Spreedly Airlines",
+      "sidebar_top_description": "This is all a dream.",
+      "sidebar_bottom_description": "Your order total today",
+      "name_label": "Name On Card"
+      }, {
+      "email": "customer@gmail.com"
+      }
+    );
+
+    SpreedlyExpress.onPaymentMethod(function(token, paymentMethod) {
+
+      // Send requisite payment method info to backend
+      var tokenField = document.getElementById("transaction_payment_token");
+
+      tokenField.setAttribute("value", token);
+
+      var masterForm = document.getElementById('new_transaction');
+      masterForm.submit();
+    });
+};
+
+</script>
+
+
+
+
+<script src="https://core.spreedly.com/iframe/express-2.min.js"></script>
