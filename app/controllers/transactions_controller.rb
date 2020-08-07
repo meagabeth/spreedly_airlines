@@ -1,6 +1,7 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
-
+  # linking module/concern to controller "include [nameOfModule]"
+  include SaveCard
   # GET /transactions
   # GET /transactions.json
   def index
@@ -14,7 +15,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/new
   def new
-    @flight = Flight.find(params[:flight_number])
+    @flight = Flight.find(params[:flight_id])
     @id = @flight.id
     @transaction = Transaction.new
 
@@ -29,6 +30,7 @@ class TransactionsController < ApplicationController
   def create
     @flight = Flight.find(transaction_params[:flight_id])
     # not sure why I need to tell it that flight_id is the flight_id?
+    # Figured out why ^^ because I'm using this as a variable in my redirect paths (doh!)
     flight_id = transaction_params[:flight_id]
     @transaction = Transaction.new(transaction_params)
     price = transaction_params[:price]
@@ -47,8 +49,14 @@ class TransactionsController < ApplicationController
         end
       else
         spreedly_success = @transaction.spreedly_purchase(payment_token, price)
+        # if the spreedly purchase succeeded
           if spreedly_success['transaction']['succeeded'] == true && @transaction.save
-            redirect_to transaction_path(@transaction.id), notice: 'Time to fly! Your ticket has been purchased.'
+            if @transaction.retain_card
+              @new_card = save_card(@transaction, spreedly_success)
+              redirect_to transaction_path(@transaction.id), notice: 'Your card has been saved for future payments. Time to fly! Your ticket has been purchased.'
+            else
+              redirect_to transaction_path(@transaction.id), notice: 'Time to fly! Your ticket has been purchased.'
+            end
           else
             redirect_to '/transactions/new?flight_number=' + flight_id, notice: 'Something went wrong.'
           end

@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_05_215836) do
+ActiveRecord::Schema.define(version: 2020_08_07_153407) do
+
+  create_table "cards", force: :cascade do |t|
+    t.string "email"
+    t.string "payment_method_token"
+    t.string "last_four_digits"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "flights", force: :cascade do |t|
     t.integer "flight_number"

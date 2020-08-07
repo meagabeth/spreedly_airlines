@@ -2,6 +2,7 @@ require "httparty"
 
 class Transaction < ApplicationRecord
     belongs_to :flight
+    has_one :card
     include HTTParty
 
     # valid? method called in controller will review the following:
@@ -36,7 +37,7 @@ class Transaction < ApplicationRecord
 
     def expedia_pmd(transaction)
         expedia_url = 'https://core.spreedly.com/v1/receivers/'
-        exp_purchase_url = expedia_url + 'aJCpwfnsEcwbe6acyuntpuF72JZ' + '/deliver.json'
+        exp_purchase_url = expedia_url + 'GGkYEyNo8BSoj1p6oHbVbm8z8bU' + '/deliver.json'
 
         options = {
             headers: {'Content-Type' => 'application/json'},
@@ -47,7 +48,7 @@ class Transaction < ApplicationRecord
             body: {
                 "delivery": {
                     "payment_method_token": transaction.payment_token,
-                    "url": "https://spreedly-echo.herokuapp.com",
+                    "url": "https://www.google.com",
                     "headers": "Content-Type: application/json",
                     "body": {
                         "flight_id": transaction.flight_id,
