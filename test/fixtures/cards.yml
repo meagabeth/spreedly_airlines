@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  payment_method_token: MyString
+  last_four_digits: MyString
+
+two:
+  email: MyString
+  payment_method_token: MyString
+  last_four_digits: MyString

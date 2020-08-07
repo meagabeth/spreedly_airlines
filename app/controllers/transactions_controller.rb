@@ -28,20 +28,35 @@ class TransactionsController < ApplicationController
   # POST /transactions.json
   def create
     @flight = Flight.find(transaction_params[:flight_id])
+    # not sure why I need to tell it that flight_id is the flight_id?
     flight_id = transaction_params[:flight_id]
     @transaction = Transaction.new(transaction_params)
     price = transaction_params[:price]
     payment_token = transaction_params[:payment_token]
 
-    respond_to do |format|
-      if @transaction.save
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
-        format.json { render :show, status: :created, location: @transaction }
+    # is transaction valid? 
+    # is it a spreedly purchase? (else it is expedia)
+    # process purchase, was successful? save transaction
+    if @transaction.valid?
+      if @transaction.expedia_purchase
+        expedia_success = @transaction.expedia_pmd(@transaction)
+        if expedia_success['transaction']['succeeded'] == true
+          redirect_to flights_path, notice: 'Pack your bags! Your reservation was a success!'
+        else
+          redirect_to '/transactions/new?flight_number=' + flight_id, notice: 'Something went wrong.'
+        end
       else
-        format.html { render :new }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
-      end
+        spreedly_success = @transaction.spreedly_purchase(payment_token, price)
+          if spreedly_success['transaction']['succeeded'] == true && @transaction.save
+            redirect_to transaction_path(@transaction.id), notice: 'Time to fly! Your ticket has been purchased.'
+          else
+            redirect_to '/transactions/new?flight_number=' + flight_id, notice: 'Something went wrong.'
+          end
+        end
+    else 
+      render :new, alert: "Transaction not valid."
     end
+
   end
 
   # PATCH/PUT /transactions/1

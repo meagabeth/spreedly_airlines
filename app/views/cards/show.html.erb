@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @card.email %>
+</p>
+
+<p>
+  <strong>Payment method token:</strong>
+  <%= @card.payment_method_token %>
+</p>
+
+<p>
+  <strong>Last four digits:</strong>
+  <%= @card.last_four_digits %>
+</p>
+
+<%= link_to 'Edit', edit_card_path(@card) %> |
+<%= link_to 'Back', cards_path %>
